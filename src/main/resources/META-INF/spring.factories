@@ -1,0 +1,1 @@
+com.probe.rpc.thrift.client.annotation.EnableThriftClient=com.probe.rpc.thrift.client.ThriftClientAutoConfiguration
