@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ThriftConsulServerListUpdater implements ServerListUpdater {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ThriftConsulServerListUpdater.class);
+	private static final Logger logger = LoggerFactory.getLogger(ThriftConsulServerListUpdater.class);
 
 	private final AtomicBoolean isActive = new AtomicBoolean(false);
 	private final long initialDelayMs;
@@ -45,7 +45,7 @@ public class ThriftConsulServerListUpdater implements ServerListUpdater {
 			serverListRefreshExecutor = new ScheduledThreadPoolExecutor(CORE_THREAD, factory);
 
 			shutdownThread = new Thread(() -> {
-				LOGGER.info("Shutting down the Executor Pool for ThriftConsulServerListUpdater");
+				logger.info("Shutting down the Executor Pool for ThriftConsulServerListUpdater");
 				shutdownExecutorPool();
 			});
 
@@ -60,7 +60,7 @@ public class ThriftConsulServerListUpdater implements ServerListUpdater {
 					try {
 						Runtime.getRuntime().removeShutdownHook(shutdownThread);
 					} catch (IllegalStateException e) {
-						LOGGER.error("Failed to shutdown the Executor Pool for ThriftConsulServerListUpdater", e);
+						logger.error("Failed to shutdown the Executor Pool for ThriftConsulServerListUpdater", e);
 					}
 				}
 
@@ -86,7 +86,7 @@ public class ThriftConsulServerListUpdater implements ServerListUpdater {
 				try {
 					updateAction.doUpdate();
 				} catch (Exception e) {
-					LOGGER.warn("Failed one do update action", e);
+					logger.warn("Failed one do update action", e);
 				}
 
 			};
@@ -94,7 +94,7 @@ public class ThriftConsulServerListUpdater implements ServerListUpdater {
 			scheduledFuture = getRefreshExecutor().scheduleWithFixedDelay(scheduledRunnable, initialDelayMs,
 					refreshIntervalMs, TimeUnit.MILLISECONDS);
 		} else {
-			LOGGER.info("Already active, no other operation");
+			logger.info("Already active, no other operation");
 		}
 	}
 
@@ -105,7 +105,7 @@ public class ThriftConsulServerListUpdater implements ServerListUpdater {
 				scheduledFuture.cancel(true);
 			}
 		} else {
-			LOGGER.info("Not active, no other operation");
+			logger.info("Not active, no other operation");
 		}
 	}
 }

@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class ThriftConsulServerListLoadBalancer extends AbstractLoadBalancer {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	private ThriftConsulServerNodeList serverNodeList;
 	private IRule rule;
@@ -46,7 +46,7 @@ public class ThriftConsulServerListLoadBalancer extends AbstractLoadBalancer {
 			try {
 				serverNode = rule.choose(key);
 			} catch (Exception e) {
-				log.warn("LoadBalancer [{}]:  Error choosing server for key {}", getClass().getSimpleName(), key, e);
+				logger.warn("LoadBalancer [{}]:  Error choosing server for key {}", getClass().getSimpleName(), key, e);
 				return null;
 			}
 
@@ -59,7 +59,7 @@ public class ThriftConsulServerListLoadBalancer extends AbstractLoadBalancer {
 	}
 
 	private synchronized void startUpdateAction() {
-		log.info("Using serverListUpdater {}", serverListUpdater.getClass().getSimpleName());
+		logger.info("Using serverListUpdater {}", serverListUpdater.getClass().getSimpleName());
 		if (serverListUpdater == null) {
 			serverListUpdater = new ThriftConsulServerListUpdater();
 		}
@@ -84,7 +84,7 @@ public class ThriftConsulServerListLoadBalancer extends AbstractLoadBalancer {
 			sb.setLength(0);
 		}
 
-		log.info("Refreshed thrift serverList: [" + String.join(", ", serverList) + "]");
+		logger.info("Refreshed thrift serverList: [" + String.join(", ", serverList) + "]");
 	}
 
 	@Override

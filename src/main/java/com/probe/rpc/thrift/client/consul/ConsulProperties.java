@@ -27,7 +27,7 @@ import org.springframework.validation.annotation.Validated;
 /**
  * @author Spencer Gibb
  */
-@ConfigurationProperties("spring.cloud.consul")
+@ConfigurationProperties("spring.consul")
 @Validated
 public class ConsulProperties {
 	/** Consul agent hostname. Defaults to 'localhost'. */

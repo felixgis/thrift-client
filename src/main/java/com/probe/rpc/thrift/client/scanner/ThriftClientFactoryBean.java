@@ -18,7 +18,7 @@ import java.util.Objects;
 
 public class ThriftClientFactoryBean<T> implements FactoryBean<T>, InitializingBean {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ThriftClientFactoryBean.class);
+	private static final Logger logger = LoggerFactory.getLogger(ThriftClientFactoryBean.class);
 
 	private String beanName;
 
@@ -38,13 +38,13 @@ public class ThriftClientFactoryBean<T> implements FactoryBean<T>, InitializingB
 	@SuppressWarnings("unchecked")
 	public T getObject() throws Exception {
 		if (beanClass.isInterface()) {
-			LOGGER.info("Prepare to generate proxy for {} with JDK", beanClass.getName());
+			logger.info("Prepare to generate proxy for {} with JDK", beanClass.getName());
 			ThriftClientInvocationHandler invocationHandler = new ThriftClientInvocationHandler(serviceSignature,
 					clientClass, clientConstructor);
 			return (T) Proxy.newProxyInstance(beanClass.getClassLoader(), new Class<?>[] { beanClass },
 					invocationHandler);
 		} else {
-			LOGGER.info("Prepare to generate proxy for {} with Cglib", beanClass.getName());
+			logger.info("Prepare to generate proxy for {} with Cglib", beanClass.getName());
 			Enhancer enhancer = new Enhancer();
 			enhancer.setSuperclass(beanClass);
 			enhancer.setNamingPolicy(SpringNamingPolicy.INSTANCE);
@@ -58,7 +58,7 @@ public class ThriftClientFactoryBean<T> implements FactoryBean<T>, InitializingB
 	@Override
 	public Class<?> getObjectType() {
 		if (Objects.isNull(beanClass) && StringUtils.isBlank(beanName)) {
-			LOGGER.warn("Bean class is not found");
+			logger.warn("Bean class is not found");
 			return null;
 		}
 
@@ -74,7 +74,7 @@ public class ThriftClientFactoryBean<T> implements FactoryBean<T>, InitializingB
 				e.printStackTrace();
 			}
 		} else {
-			LOGGER.warn("Bean class is not found");
+			logger.warn("Bean class is not found");
 		}
 
 		return null;
@@ -87,7 +87,7 @@ public class ThriftClientFactoryBean<T> implements FactoryBean<T>, InitializingB
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		LOGGER.info("Succeed to instantiate an instance of ThriftClientFactoryBean: {}", this);
+		logger.info("Succeed to instantiate an instance of ThriftClientFactoryBean: {}", this);
 	}
 
 	public String getBeanName() {

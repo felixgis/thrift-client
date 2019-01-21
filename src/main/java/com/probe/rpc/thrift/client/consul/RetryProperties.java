@@ -22,7 +22,7 @@ import org.springframework.core.style.ToStringCreator;
 /**
  * @author Spencer Gibb
  */
-@ConfigurationProperties("spring.cloud.consul.retry")
+@ConfigurationProperties("spring.consul.retry")
 public class RetryProperties {
 
 	/** Initial retry interval in milliseconds. */

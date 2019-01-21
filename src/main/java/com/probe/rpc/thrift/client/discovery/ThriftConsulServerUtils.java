@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class ThriftConsulServerUtils {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ThriftConsulServerUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(ThriftConsulServerUtils.class);
 
 	private static final String CHECK_STATUS_PASSING = "passing";
 
@@ -40,7 +40,7 @@ public class ThriftConsulServerUtils {
 			InetAddress inetAddress = InetAddress.getByName(address);
 			return inetAddress instanceof Inet6Address ? "[" + inetAddress.getHostName() + "]" : address;
 		} catch (UnknownHostException var2) {
-			LOGGER.error("Not InetAddress: " + address + " , resolved as is.");
+			logger.error("Not InetAddress: " + address + " , resolved as is.");
 			return address;
 		}
 	}
